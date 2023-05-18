@@ -1,0 +1,172 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+    /* outline: 1px solid salmon; */
+}
+
+html,body{
+    width: 100%;
+}
+
+
+.container{
+    min-height: 100vh;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-image: url("img/45degreee_fabric.webp"); */
+    background-size: auto;
+    background-repeat: repeat;
+}
+
+.alert{
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    width: 30%;
+    height: 0;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px 15px 0 0;
+    background-color: tomato;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: all .35s ease-out;
+}
+
+.alert.active{
+    opacity: 1;
+    height: 40px;
+}
+
+.to-do-app{
+    position: relative;
+    width: 100%;
+    width: 100%;
+    max-width: 540px;
+    background-color: white;
+    padding: 40px 30px 70px; 
+    /* 上 左右 下 */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 1px hsl(0, 0%, 85%);
+}
+
+/* 標題與標題icon */
+.to-do-app h1{
+    color: hsl(0, 0%, 10%);
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.to-do-app h1 i{
+    margin-left: 10px;
+}
+
+/* input 輸入區 */
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: hsl(0, 0%, 90%);
+    border-radius: 30px;
+    margin-bottom: 25px;
+}
+
+input{
+    outline: none;
+    border: none;
+    flex: 1;        
+    /* button沒有設flex是多少的話，input 就會撐滿佔據父層 */
+    background-color: transparent;
+    padding: 10px;
+    padding-left: 25px;
+}
+
+button{
+    display: flex;
+    align-items: center;
+    outline: none;
+    border: none;
+    background-color: seagreen;
+    color: white;
+    font-size: 16px;
+    padding: 16px 30px;
+    border-radius: 40px;    
+    cursor: pointer;
+    /* flex: 1; */
+    /* 如果 button 也加上 flex:1 ，那就跟 input 各佔 1:1，就會是各半 */
+}
+
+button i {
+    position: relative;
+    top: 1px;
+    font-size: 20px;
+    margin-left: 4px;
+}
+
+ul li{
+    position: relative;
+    list-style: none;
+    font-size: 18px;
+    padding: 12px 0;
+    padding-left: 40px;
+    padding-right: 50px;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* 添加事項未完成的圈圈 */
+ul li::before{
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='fill: rgba(0, 0, 0, 0.5);transform: ;msFilter:;'%3E%3Cpath d='M12 2C6.486 2 2 6.486 2 12c.001 5.515 4.487 10.001 10 10.001 5.514 0 10-4.486 10.001-10.001 0-5.514-4.486-10-10.001-10zm0 18.001c-4.41 0-7.999-3.589-8-8.001 0-4.411 3.589-8 8-8 4.412 0 8.001 3.589 8.001 8-.001 4.412-3.59 8.001-8.001 8.001z'%3E%3C/path%3E%3C/svg%3E");
+    /* SVG URL Encoder : https://yoksel.github.io/url-encoder/ */
+    background-size: cover;
+    background-position: center ;
+    background-repeat: no-repeat;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px; 
+}
+
+ul li.checked{
+    color: hsl(0, 0%, 45%);
+    text-decoration: line-through;
+}
+
+/* 只在有添加 class checked 的 li 前面替換「已完成」的 icon 背景圖案 svg */
+ul li.checked::before{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='fill: rgba(46, 139,87, 1);transform: ;msFilter:;'%3E%3Cpath d='M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* 刪除清單項目的X按鈕 */
+ul li span.close{
+    content: "";
+    position: absolute;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    /* background-color: pink; */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='fill: rgba(0, 0, 0, 0.7);transform: ;msFilter:;'%3E%3Cpath d='m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: background-color .1s ease-out, background-image .1s ease-out;
+}
+
+ul li span.close:hover{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' style='fill: rgba(0,0,0 ,0.7);transform: scale(0.8) ;msFilter:;'%3E%3Cpath d='m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z'%3E%3C/path%3E%3C/svg%3E");
+    background-color: gainsboro;
+}
