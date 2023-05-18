@@ -4,11 +4,14 @@ const listContainer = document.querySelector("#list-container");
 const addBtn = document.querySelector("#add");
 const alert = document.querySelector(".alert");
 
+let items;
+let arrItems = [];
+
 
 addBtn.addEventListener("click", addTask);
 
+// 新增項目：按鈕
 function addTask(){
-
     if(inputBox.value == ""){
         // alert("代辦事項為必填！");
         alert.classList.add("active");
@@ -16,8 +19,10 @@ function addTask(){
         alert.classList.remove("active");
         let li = document.createElement("li");
         li.textContent = inputBox.value;
+        // li 添加可拖曳屬性
+        li.setAttribute("draggable", "true")
+        // 把 li 加入 ul 裡面
         listContainer.appendChild(li);
-        
         let span = document.createElement("span");
         span.className = "close";
         li.appendChild(span);
@@ -26,8 +31,8 @@ function addTask(){
     inputBox.value= "";
     
     //每次輸入完代辦事項就要存到瀏覽器內
-    saveData();
-}
+    saveData(); 
+};
 
 // 輸入欄位使用 鍵盤 enter 也能新增項目
 // 13 is the keycode for "Enter"
@@ -39,8 +44,9 @@ inputBox.addEventListener("keypress", function(event) {
     }
 });
 
-// 如果點到 li 項目，就切換成已經完成，添加 class checked
-// span標籤負責關閉按鈕，而 li 是 span 的直接父層
+// 新增項目：鍵盤
+// 若點擊到事項，就切換成已經完成，添加 class checked
+// span 標籤負責關閉按鈕，而 li 是 span 的直接父層
 // 如果點擊到關閉按鈕，就移除它的直接父層元素，也就是移除 li 元素。(被點擊到的)
 // 監聽事件的第三個參數寫false代表是使用預設的 冒泡 傳遞機制，由內往外傳遞
 listContainer.addEventListener("click", function(e){
@@ -70,7 +76,20 @@ function showTask(){
 // 記得呼叫函式才會執行
 showTask();
 
+// 拖曳套件
+new Sortable(listContainer,{
+    animation: 200,
+});
+
+// 只要 整個DOM有發生 drag事件，就記錄下來當下的清單項目狀態，存進瀏覽器裡面
+// 這樣一來，就能記錄到拖曳後的最新排序清單
+window.addEventListener("drag", saveData);
+
+
 // localStorage.clear(); 可以清除資料
+
+
+
 
 
 // 重整頁面就出現一個隨機背景圖

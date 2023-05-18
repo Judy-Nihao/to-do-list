@@ -121,7 +121,13 @@ ul li{
     padding-right: 50px;
     user-select: none;
     cursor: pointer;
+    transition: background-color .15s ease-out;
 }
+
+ul li:hover{
+    background-color: gainsboro;
+}
+
 
 /* 添加事項未完成的圈圈 */
 ul li::before{
