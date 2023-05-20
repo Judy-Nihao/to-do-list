@@ -44,7 +44,7 @@ inputBox.addEventListener("keypress", function(event) {
     }
 });
 
-// 新增項目：鍵盤
+// 電腦監聽點擊事件
 // 若點擊到事項，就切換成已經完成，添加 class checked
 // span 標籤負責關閉按鈕，而 li 是 span 的直接父層
 // 如果點擊到關閉按鈕，就移除它的直接父層元素，也就是移除 li 元素。(被點擊到的)
@@ -60,27 +60,34 @@ listContainer.addEventListener("click", function(e){
         }
 },false);
 
+//============== 手機區 =================
 // 手機監聽觸控事件
+// 手指碰到項目就切換清單完成/未完成
 listContainer.addEventListener("touchstart", function(e){
     if(e.target.tagName == "LI"){
         e.target.classList.toggle("checked");
-        saveData();
-    }
-    else if(e.target.tagName == "SPAN"){
-        e.target.parentElement.remove();
-        saveData();
     }
 },false);
 
-// 因為碰觸一處發就會打勾，但是有些項目只是要拖移而非打勾
+
+// 因為一旦碰觸就會觸發打勾，但是有些項目只是要拖移並非打勾
 // 所以在讓手指在螢幕上面滑動時，取消打勾，這樣移動後項目就不會有打勾
 listContainer.addEventListener("touchmove", function(e){
     if(e.target.tagName == "LI"){
         e.target.classList.remove("checked");
-        saveData();
+        e.target.style.backgroundColor = "gainsboro";
     }
 },false);
 
+// 刪除功能只有在手指碰觸按鈕後離開之時，才觸發
+// 刪除按鈕一定要用 "end"，如果用 "start"監聽，每次點擊刪除就會有殘像在畫面上
+listContainer.addEventListener("touchend", function(e){
+     if(e.target.tagName == "SPAN"){
+        e.target.parentElement.remove();
+    }else if(e.target.tagName == "LI"){
+        e.target.style.backgroundColor = "transparent";
+    }
+},false);
 
 // 將待辦事項存在瀏覽器內，即使頁面重整，資料還是能從儲存庫裡面調出來
 // data存起來後再抓出，用innerHTML放進去呈現資料，就能包含排版和勾選狀態等，全部保留在頁面上
@@ -95,6 +102,7 @@ function showTask(){
     listContainer.innerHTML =  localStorage.getItem("data");
 }
 
+
 // 記得呼叫函式才會執行
 showTask();
 
@@ -103,12 +111,21 @@ new Sortable(listContainer,{
     animation: 200,
 });
 
-// 只要 整個DOM有發生 drag事件，就記錄下來當下的清單項目狀態，存進瀏覽器裡面
+// 電腦版：只要整個DOM有發生 drag事件，就記錄下來當下的清單項目狀態，存進瀏覽器裡面
 // 這樣一來，就能記錄到拖曳後的最新排序清單
-window.addEventListener("drag", saveData);
+// 手機版：任何更動最後都會有手指離開螢幕的階段，記錄當下清單狀態。（手機版無法偵測到drag)
+if (window.innerWidth > 767){
+    window.addEventListener("drag", function(){
+        saveData();
+})
+}else{
+    window.addEventListener("touchend", function(){
+        saveData();
+})
+}
 
+//localStorage.clear(); //可以清除資料
 
-// localStorage.clear(); 可以清除資料
 
 
 
