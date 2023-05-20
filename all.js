@@ -50,8 +50,11 @@ inputBox.addEventListener("keypress", function(event) {
 // 如果點擊到關閉按鈕，就移除它的直接父層元素，也就是移除 li 元素。(被點擊到的)
 // 監聽事件的第三個參數寫false代表是使用預設的 冒泡 傳遞機制，由內往外傳遞
 listContainer.addEventListener("click", function(e){
+<<<<<<< HEAD
     const child = e.target.matches("span, span *, li, .li *");
     if(child){
+=======
+>>>>>>> 41a48d8 (使用touchstart修正手機click無效狀況)
         if(e.target.tagName == "LI"){
             e.target.classList.toggle("checked");
             saveData();
@@ -59,7 +62,22 @@ listContainer.addEventListener("click", function(e){
         else if(e.target.tagName == "SPAN"){
             e.target.parentElement.remove();
             saveData();
+<<<<<<< HEAD
         }}
+=======
+        }
+},false);
+
+listContainer.addEventListener("touchstart", function(e){
+    if(e.target.tagName == "LI"){
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if(e.target.tagName == "SPAN"){
+        e.target.parentElement.remove();
+        saveData();
+    }
+>>>>>>> 41a48d8 (使用touchstart修正手機click無效狀況)
 },false);
 
 
