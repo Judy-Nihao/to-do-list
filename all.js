@@ -60,6 +60,7 @@ listContainer.addEventListener("click", function(e){
         }
 },false);
 
+// 手機監聽觸控事件
 listContainer.addEventListener("touchstart", function(e){
     if(e.target.tagName == "LI"){
         e.target.classList.toggle("checked");
@@ -67,6 +68,15 @@ listContainer.addEventListener("touchstart", function(e){
     }
     else if(e.target.tagName == "SPAN"){
         e.target.parentElement.remove();
+        saveData();
+    }
+},false);
+
+// 因為碰觸一處發就會打勾，但是有些項目只是要拖移而非打勾
+// 所以在讓手指在螢幕上面滑動時，取消打勾，這樣移動後項目就不會有打勾
+listContainer.addEventListener("touchmove", function(e){
+    if(e.target.tagName == "LI"){
+        e.target.classList.remove("checked");
         saveData();
     }
 },false);
