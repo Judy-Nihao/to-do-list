@@ -13,7 +13,7 @@ addBtn.addEventListener("click", addTask);
 // 新增項目：按鈕
 function addTask(){
     if(inputBox.value == ""){
-        // alert("代辦事項為必填！");
+        // alert("待辦事項為必填！");
         alert.classList.add("active");
     }else{
         alert.classList.remove("active");
