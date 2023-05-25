@@ -17,7 +17,6 @@ html,body{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-image: url("img/45degreee_fabric.webp"); */
     background-size: auto;
     background-repeat: repeat;
 }
@@ -151,12 +150,12 @@ ul li.checked{
     text-decoration: line-through;
 }
 
-/* 只在有添加 class checked 的 li 前面替換「已完成」的 icon 背景圖案 svg */
+/* 只在有添加 class checked 的 li 前面，替換「已完成」icon 背景圖 svg */
 ul li.checked::before{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='fill: rgba(46, 139,87, 1);transform: ;msFilter:;'%3E%3Cpath d='M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z'%3E%3C/path%3E%3C/svg%3E");
 }
 
-/* 刪除清單項目的X按鈕 */
+/* 刪除清單項目的按鈕 */
 ul li span.close{
     content: "";
     position: absolute;

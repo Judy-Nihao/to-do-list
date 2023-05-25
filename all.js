@@ -34,9 +34,10 @@ function addTask(){
     saveData(); 
 };
 
-// 輸入欄位使用 鍵盤 enter 也能新增項目
+// input 使用 鍵盤 enter 也能新增項目
 // 13 is the keycode for "Enter"
-// 選用 keypress，這樣注音選字時才不會意外送出，選好字按下去的 Enter 才送出
+// keypress事件，可避免注音輸入法選字時意外送出的問題，選字完成後，按下去 Enter 才送出
+// 如果用 keyup 就會在選字尚未完成就直接送出，所以不適合。
 inputBox.addEventListener("keypress", function(event) {
     if (event.keyCode === 13) { 
       event.preventDefault();
@@ -44,7 +45,8 @@ inputBox.addEventListener("keypress", function(event) {
     }
 });
 
-// 電腦監聽點擊事件
+
+// 電腦版:監聽點擊事件
 // 若點擊到事項，就切換成已經完成，添加 class checked
 // span 標籤負責關閉按鈕，而 li 是 span 的直接父層
 // 如果點擊到關閉按鈕，就移除它的直接父層元素，也就是移除 li 元素。(被點擊到的)
@@ -60,8 +62,8 @@ listContainer.addEventListener("click", function(e){
         }
 },false);
 
-//============== 手機區 =================
-// 手機監聽觸控事件
+
+// 手機版:監聽觸控事件
 // 手指碰到項目就切換清單完成/未完成
 listContainer.addEventListener("touchstart", function(e){
     if(e.target.tagName == "LI"){
@@ -80,7 +82,8 @@ listContainer.addEventListener("touchmove", function(e){
 },false);
 
 // 刪除功能只有在手指碰觸按鈕後離開之時，才觸發
-// 刪除按鈕一定要用 "end"，如果用 "start"監聽，每次點擊刪除就會有殘像在畫面上
+// 刪除按鈕一定要用 "end"
+// 測試發現，如果用 "start"監聽，點擊刪除時清單項目會閃一下跑到最上面，又被 localStorage 記錄到這個位置，導致後續渲染時畫面出現殘像。
 listContainer.addEventListener("touchend", function(e){
      if(e.target.tagName == "SPAN"){
         e.target.parentElement.remove();
@@ -111,9 +114,9 @@ new Sortable(listContainer,{
     animation: 200,
 });
 
-// 電腦版：只要整個DOM有發生 drag事件，就記錄下來當下的清單項目狀態，存進瀏覽器裡面
+// 電腦版：只要整個DOM有發生 drag 事件，就記錄當下的清單項目狀態，存進瀏覽器裡面
 // 這樣一來，就能記錄到拖曳後的最新排序清單
-// 手機版：任何更動最後都會有手指離開螢幕的階段，記錄當下清單狀態。（手機版無法偵測到drag)
+// 手機版：由於任何更動，最終肯定都有手指離開螢幕的階段，監聽 "touchend" 記錄當下清單狀態。（測試發現手機版無法偵測到drag事件)
 if (window.innerWidth > 767){
     window.addEventListener("drag", function(){
         saveData();
@@ -127,21 +130,10 @@ if (window.innerWidth > 767){
 //localStorage.clear(); //可以清除資料
 
 
-
-
-
-
-// 重整頁面就出現一個隨機背景圖
-window.onload = function ()
-{
-    // container.style.backgroundImage = "url('https://images.pexels.com/photos/15286/pexels-photo.jpg')";
-    container.style.backgroundImage = generateRandom();
-}
-
-
+// 更換背景
 // 在 8 張 圖片中隨機取出其中一張
-// function 值節結果會回傳一個圖片網址字串
-
+// 此function 執行完畢，會 return 一個圖片網址字串
+// 把此圖片網址賦予給 container 的 CSS background-image 屬性，改變背景圖片
 function generateRandom(){
     const str = [
         "url('img/45degreee_fabric.webp')",
@@ -171,4 +163,10 @@ function generateRandom(){
     }
 
     return res;
+}
+
+// 重整頁面就出現一個隨機背景圖
+window.onload = function ()
+{
+    container.style.backgroundImage = generateRandom();
 }
