@@ -36,9 +36,9 @@ function addTask(){
 
 // input 使用 鍵盤 enter 也能新增項目
 // 13 is the keycode for "Enter"
-// keypress事件，可避免注音輸入法選字時意外送出的問題，選字完成後，按下去 Enter 才送出
+// keydown事件，可避免注音輸入法選字時意外送出的問題，選字完成後，按下去 Enter 才送出
 // 如果用 keyup 就會在選字尚未完成就直接送出，所以不適合。
-inputBox.addEventListener("keypress", function(event) {
+inputBox.addEventListener("keydown", function(event) {
     if (event.keyCode === 13) { 
       event.preventDefault();
       addTask();
