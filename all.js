@@ -110,6 +110,7 @@ function showTask(){
 showTask();
 
 // 拖曳套件
+// 建立 Sortable 實體 create sortable and save instance
 new Sortable(listContainer,{
     animation: 200,
 });
@@ -156,13 +157,7 @@ function generateRandom(){
 
     let mathRandom = Math.floor(Math.random()*(str.length));
     let res = "";
-    
-    for(let i = 0; i < str.length ; i ++) {
-       let id = mathRandom;
-       res = str[id];
-    }
-
-    return res;
+    return str[mathRandom];
 }
 
 // 重整頁面就出現一個隨機背景圖
