@@ -1,4 +1,4 @@
-# 實作紀錄：可拖曳與紀錄的 To Do List
+# 實作紀錄：To-Do List 三重奏之三：原生 JavaScript
 
 ## 實作網址
 gh-pages
@@ -19,6 +19,8 @@ https://github.com/Judy-Nihao/to-do-list
 ![image](https://hackmd.io/_uploads/H1a92rLUh.jpg)
 
 ## 筆記
+
+「ToDo List 三重奏」是我為了體會原生JS和框架的邏輯差異，以及比較兩大框架 Vue 和 React 自己使用起來的上手程度，來決定往後偏好優先深入研究的對象，我以 ToDo List 的實作當作比較基礎，製作出三個 ToDo List ，兩種框架共同使用 Vite 作為前端建構工具。
 
 To-Do-List 最基礎的功能是，新增與刪除事項，即使畫面重整仍保留待辦紀錄，才符合「待辦清單」的意義，看似功能不複雜，但是實際嘗試實作，發現要結合視覺美感、兼顧桌上與行動版的流暢操作體驗、讓清單順序能拖曳改序，並紀錄順序調換後的清單內容，其實有很多知識點需要一一突破。
 
